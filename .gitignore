@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.next/
+*.log
+.env
+.env.local
+.DS_Store
+*.tsbuildinfo
+
+# Ad-hoc test data generated during development, not part of the app
+/1000_urls.csv
+/1000_urls_unique.csv
+/300_urls.csv
+/sample-urls.csv
+
+# Assignment brief, not part of the deliverable
+/Take Home Task Bulk URL Health Checker.pdf

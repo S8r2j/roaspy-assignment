@@ -1,0 +1,495 @@
+/* Design tokens -------------------------------------------------------
+   Researched, not eyeballed: single-accent + neutral-base is the current
+   (2026) consensus for functional SaaS dashboards over decorative
+   multi-stop gradients — see README trade-offs for sources. Every
+   text/surface pair below is checked against WCAG contrast math, not
+   assumed. Status colors follow the pattern of pairing color with an
+   icon/label (see StatusBadge), never color alone. */
+:root {
+  --color-text: #1a1a2e;
+  --color-text-muted: #5c5a72;
+  --color-border: #e2e0eb;
+  --color-border-strong: #c7c4d6;
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f7f6fb;
+  --color-bg-muted: #edecf4;
+
+  /* Single accent, one weight. #6d28d9 on white = 7.1:1 (AA). The former
+     bright end (#8b5cf6) only hit 4.2:1 and is why the primary button
+     read as washed-out — dropped, not just darkened. */
+  --accent: #6d28d9;
+  --accent-dark: #55219f;
+  --accent-bg: #f1ecfb;
+  --accent-ring: rgba(109, 40, 217, 0.18);
+
+  --color-green: #0a7a45;
+  --color-green-bg: #e3f6ec;
+  --color-red: #c22a4e;
+  --color-red-bg: #fbe9ee;
+  --color-amber: #9c6300;
+  --color-amber-bg: #faefd8;
+  --color-grey: #5c5a72;
+  --color-grey-bg: #edecf4;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(26, 26, 46, 0.06);
+  --shadow-md: 0 6px 16px -6px rgba(26, 26, 46, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg-subtle);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 2rem 0 0.85rem;
+}
+
+/* Header ---------------------------------------------------------------- */
+.app-header {
+  background: var(--accent);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2.5rem;
+}
+
+.app-header__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem;
+  position: relative;
+}
+
+.app-header__link {
+  text-decoration: none;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.app-header__link:hover .app-header__title {
+  opacity: 0.9;
+}
+
+.app-header__mark {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  font-size: 1.1rem;
+  backdrop-filter: blur(4px);
+}
+
+.app-header__title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fff;
+  transition: opacity 0.15s ease;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: var(--accent-dark);
+}
+
+/* Cards / sections ------------------------------------------------------- */
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+}
+
+.card + .card,
+.card + section,
+section + .card {
+  margin-top: 1.5rem;
+}
+
+/* Buttons ---------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.2;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  background: var(--color-bg-muted) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-muted) !important;
+  box-shadow: none !important;
+}
+
+.btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+.btn-primary:not(:disabled):hover {
+  background: var(--accent-dark);
+}
+
+.btn-secondary {
+  background: var(--color-bg);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.btn-secondary:not(:disabled):hover {
+  background: var(--color-bg-muted);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.btn-danger {
+  background: #fff;
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.btn-danger:not(:disabled):hover {
+  background: var(--color-red-bg);
+}
+
+/* Status badges ------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  letter-spacing: 0.01em;
+}
+
+.badge-succeeded,
+.badge-done {
+  background: var(--color-green-bg);
+  color: var(--color-green);
+}
+
+.badge-failed {
+  background: var(--color-red-bg);
+  color: var(--color-red);
+}
+
+.badge-cancelled {
+  background: var(--color-grey-bg);
+  color: var(--color-grey);
+}
+
+.badge-running {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.badge-running span:first-child {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+.badge-queued,
+.badge-pending {
+  background: var(--color-amber-bg);
+  color: var(--color-amber);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-running span:first-child {
+    animation: none;
+  }
+}
+
+/* Progress bar ------------------------------------------------------- */
+.progress-track {
+  width: 100%;
+  height: 12px;
+  background: var(--color-bg-muted);
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: inset 0 1px 2px rgba(23, 19, 33, 0.06);
+}
+
+.progress-seg {
+  height: 100%;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progress-seg-succeeded {
+  background: var(--color-green);
+}
+
+.progress-seg-failed {
+  background: var(--color-red);
+}
+
+.progress-seg-cancelled {
+  background: var(--color-grey);
+}
+
+.progress-seg-running {
+  background: var(--accent);
+}
+
+/* Stat pills (segmented counts) --------------------------------------- */
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.stat-pill strong {
+  font-size: 1.05rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* Tables ------------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 0.7rem 0.75rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border-strong);
+  background: var(--color-bg-subtle);
+  position: sticky;
+  top: 0;
+  font-weight: 700;
+}
+
+td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.88rem;
+  vertical-align: top;
+}
+
+tbody tr {
+  transition: background 0.1s ease;
+}
+
+tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+.table-scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-scroll table {
+  border-collapse: collapse;
+}
+
+.url-cell {
+  max-width: 340px;
+}
+
+.url-cell button.url-copy {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.83rem;
+  color: var(--color-text);
+  text-align: left;
+}
+
+.url-cell button.url-copy:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+.error-text {
+  color: var(--color-red);
+  font-size: 0.83rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.empty-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-bg-subtle);
+}
+
+/* Submit form ---------------------------------------------------------- */
+.tab-group {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--color-bg-muted);
+  padding: 0.3rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.1rem;
+  width: fit-content;
+}
+
+.tab-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 0.45rem 1rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-radius: 7px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tab-btn[aria-selected="true"] {
+  color: var(--accent-dark);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.field-hint {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0.35rem 0 0;
+}
+
+textarea.url-textarea {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.88rem;
+  padding: 0.7rem;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+textarea.url-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.dropzone {
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 1.75rem 1rem;
+  text-align: center;
+  background: var(--color-bg-subtle);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dropzone:has(input:focus-visible) {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.error-banner {
+  background: var(--color-red-bg);
+  color: var(--color-red);
+  border: 1px solid var(--color-red);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.86rem;
+  margin-top: 0.85rem;
+  font-weight: 500;
+}
